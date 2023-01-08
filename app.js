@@ -1,6 +1,6 @@
 var pathToFfmpeg = require('ffprobe-static');
 const { execFile } = require('child_process')
-
+const app = require("express")();
 
 
 /**
@@ -56,7 +56,11 @@ function ffprobe(target, config = {}) {
 
 console.log(pathToFfmpeg);
 
-async function test() {
-    console.log(await ffprobe("https://seach.sigmacdn1.workers.dev/stream/782167627762213921326932754d4e52605250363664523b697b67733353506a347231424c574a625a75212f21776a6e6621393235343032363a3631373235367e/Money%20Heist%20S01-%20Episode%2001.mkv"));
-}
-test()
+
+app.get("/", (req, res) => {
+    res.send("hii jeet")
+});
+app.get("/run", async (req, res) => {
+    res.send(await ffprobe("https://seach.sigmacdn1.workers.dev/stream/782167627762213921326932754d4e52605250363664523b697b67733353506a347231424c574a625a75212f21776a6e6621393235343032363a3631373235367e/Money%20Heist%20S01-%20Episode%2001.mkv"))
+});
+app.listen(process.env.PORT || 5000)
